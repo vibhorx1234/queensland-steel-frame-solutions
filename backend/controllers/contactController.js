@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-// In-memory storage for OTPs and contact data (use database in production)
+// In-memory storage for OTPs and contact data
 const otpStorage = new Map();
 const contactDataStorage = new Map();
 
@@ -9,50 +9,60 @@ const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Create nodemailer transporter with better error handling and timeout settings
+// Create nodemailer transporter with optimized settings for Render
 const createTransporter = () => {
   const config = {
-    host: process.env.EMAIL_HOST,
-    port: parseInt(process.env.EMAIL_PORT),
-    secure: process.env.EMAIL_SECURE === 'true',
+    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.EMAIL_PORT) || 465,
+    secure: process.env.EMAIL_SECURE === 'true', // true for port 465
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD
     },
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
-    pool: true, // Use pooled connections
-    maxConnections: 5,
-    maxMessages: 100
+    connectionTimeout: 60000, // 60 seconds
+    greetingTimeout: 60000,
+    socketTimeout: 60000,
+    pool: false, // Disable pooling for better reliability
+    tls: {
+      rejectUnauthorized: true,
+      minVersion: 'TLSv1.2',
+      ciphers: 'HIGH:MEDIUM:!aNULL:!eNULL:@STRENGTH:!DH:!kEDH'
+    },
+    // Additional settings for better reliability
+    requireTLS: false,
+    opportunisticTLS: true
   };
-
-  // Add debug logging in development
-  if (process.env.NODE_ENV !== 'production') {
-    config.debug = true;
-    config.logger = true;
-  }
 
   console.log('Creating transporter with config:', {
     host: config.host,
     port: config.port,
     secure: config.secure,
-    user: config.auth.user
+    user: config.auth.user,
+    hasPassword: !!config.auth.pass
   });
 
   return nodemailer.createTransport(config);
 };
 
-// Verify transporter connection
-const verifyTransporter = async (transporter) => {
-  try {
-    await transporter.verify();
-    console.log('Email transporter verified successfully');
-    return true;
-  } catch (error) {
-    console.error('Email transporter verification failed:', error);
-    return false;
+// Verify transporter connection with retries
+const verifyTransporter = async (transporter, retries = 3) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      console.log(`Verifying transporter (attempt ${i + 1}/${retries})...`);
+      await transporter.verify();
+      console.log('Email transporter verified successfully');
+      return true;
+    } catch (error) {
+      console.error(`Verification attempt ${i + 1} failed:`, error.message);
+      if (i === retries - 1) {
+        console.error('All verification attempts failed');
+        return false;
+      }
+      // Wait before retry
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
   }
+  return false;
 };
 
 // Send OTP to user's email
@@ -77,6 +87,15 @@ exports.sendOTP = async (req, res) => {
       });
     }
 
+    // Check if email credentials are configured
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+      console.error('Email credentials not configured');
+      return res.status(500).json({
+        success: false,
+        message: 'Email service not configured. Please contact administrator.'
+      });
+    }
+
     // Generate OTP
     const otp = generateOTP();
     const contactId = Date.now().toString();
@@ -91,9 +110,10 @@ exports.sendOTP = async (req, res) => {
     // Create transporter
     const transporter = createTransporter();
 
-    // Verify connection before sending
+    // Verify connection before sending (with retries)
     const isVerified = await verifyTransporter(transporter);
     if (!isVerified) {
+      console.error('Failed to verify email transporter after retries');
       return res.status(500).json({
         success: false,
         message: 'Email service connection failed. Please try again later.'
@@ -151,6 +171,9 @@ exports.sendOTP = async (req, res) => {
 
     console.log('OTP email sent successfully to:', email);
 
+    // Close transporter
+    transporter.close();
+
     res.status(200).json({
       success: true,
       message: 'OTP sent successfully',
@@ -162,7 +185,8 @@ exports.sendOTP = async (req, res) => {
     console.error('Error details:', {
       message: error.message,
       code: error.code,
-      command: error.command
+      command: error.command,
+      stack: error.stack
     });
     
     res.status(500).json({
@@ -225,7 +249,7 @@ exports.verifyOTP = async (req, res) => {
     // Create transporter
     const transporter = createTransporter();
 
-    // Verify connection before sending
+    // Verify connection before sending (with retries)
     const isVerified = await verifyTransporter(transporter);
     if (!isVerified) {
       return res.status(500).json({
@@ -334,6 +358,9 @@ exports.verifyOTP = async (req, res) => {
     ]);
 
     console.log('Confirmation emails sent successfully');
+
+    // Close transporter
+    transporter.close();
 
     // Clean up stored data
     otpStorage.delete(contactId);
