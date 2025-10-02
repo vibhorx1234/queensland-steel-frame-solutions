@@ -2,7 +2,7 @@ services:
   - type: web
     name: queensland-steel-frame
     env: node
-    region: oregon  # Changed from singapore to oregon (US West)
+    region: oregon
     buildCommand: cd backend && npm install && npm run build
     startCommand: cd backend && npm start
     envVars:
@@ -10,12 +10,6 @@ services:
         value: production
       - key: PORT
         value: 10000
-      - key: EMAIL_HOST
-        value: smtp.gmail.com
-      - key: EMAIL_PORT
-        value: 465
-      - key: EMAIL_SECURE
-        value: true
       - key: EMAIL_USER
         value: vibhorx1234@gmail.com
       - key: EMAIL_PASSWORD

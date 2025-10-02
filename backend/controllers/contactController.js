@@ -9,60 +9,26 @@ const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Create nodemailer transporter with optimized settings for Render
+// Create nodemailer transporter - without verification
 const createTransporter = () => {
   const config = {
-    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.EMAIL_PORT) || 465,
-    secure: process.env.EMAIL_SECURE === 'true', // true for port 465
+    service: 'gmail', // Use gmail service directly
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD
     },
-    connectionTimeout: 60000, // 60 seconds
+    connectionTimeout: 60000,
     greetingTimeout: 60000,
     socketTimeout: 60000,
-    pool: false, // Disable pooling for better reliability
+    pool: false,
     tls: {
-      rejectUnauthorized: true,
-      minVersion: 'TLSv1.2',
-      ciphers: 'HIGH:MEDIUM:!aNULL:!eNULL:@STRENGTH:!DH:!kEDH'
-    },
-    // Additional settings for better reliability
-    requireTLS: false,
-    opportunisticTLS: true
+      rejectUnauthorized: false
+    }
   };
 
-  console.log('Creating transporter with config:', {
-    host: config.host,
-    port: config.port,
-    secure: config.secure,
-    user: config.auth.user,
-    hasPassword: !!config.auth.pass
-  });
+  console.log('Creating Gmail transporter for user:', config.auth.user);
 
-  return nodemailer.createTransport(config);
-};
-
-// Verify transporter connection with retries
-const verifyTransporter = async (transporter, retries = 3) => {
-  for (let i = 0; i < retries; i++) {
-    try {
-      console.log(`Verifying transporter (attempt ${i + 1}/${retries})...`);
-      await transporter.verify();
-      console.log('Email transporter verified successfully');
-      return true;
-    } catch (error) {
-      console.error(`Verification attempt ${i + 1} failed:`, error.message);
-      if (i === retries - 1) {
-        console.error('All verification attempts failed');
-        return false;
-      }
-      // Wait before retry
-      await new Promise(resolve => setTimeout(resolve, 2000));
-    }
-  }
-  return false;
+  return nodemailer.createTransporter(config);
 };
 
 // Send OTP to user's email
@@ -110,16 +76,6 @@ exports.sendOTP = async (req, res) => {
     // Create transporter
     const transporter = createTransporter();
 
-    // Verify connection before sending (with retries)
-    const isVerified = await verifyTransporter(transporter);
-    if (!isVerified) {
-      console.error('Failed to verify email transporter after retries');
-      return res.status(500).json({
-        success: false,
-        message: 'Email service connection failed. Please try again later.'
-      });
-    }
-
     // Email template for OTP
     const mailOptions = {
       from: `"Queensland Steel Frame Solutions" <${process.env.EMAIL_USER}>`,
@@ -166,13 +122,10 @@ exports.sendOTP = async (req, res) => {
 
     console.log('Attempting to send OTP email to:', email);
 
-    // Send email with timeout
-    await transporter.sendMail(mailOptions);
+    // Send email directly without verification
+    const info = await transporter.sendMail(mailOptions);
 
-    console.log('OTP email sent successfully to:', email);
-
-    // Close transporter
-    transporter.close();
+    console.log('OTP email sent successfully. Message ID:', info.messageId);
 
     res.status(200).json({
       success: true,
@@ -186,7 +139,7 @@ exports.sendOTP = async (req, res) => {
       message: error.message,
       code: error.code,
       command: error.command,
-      stack: error.stack
+      response: error.response
     });
     
     res.status(500).json({
@@ -248,15 +201,6 @@ exports.verifyOTP = async (req, res) => {
 
     // Create transporter
     const transporter = createTransporter();
-
-    // Verify connection before sending (with retries)
-    const isVerified = await verifyTransporter(transporter);
-    if (!isVerified) {
-      return res.status(500).json({
-        success: false,
-        message: 'Email service connection failed. Please try again later.'
-      });
-    }
 
     // Send notification to owner
     const ownerMailOptions = {
@@ -352,15 +296,13 @@ exports.verifyOTP = async (req, res) => {
     console.log('Attempting to send confirmation emails...');
 
     // Send both emails
-    await Promise.all([
+    const results = await Promise.all([
       transporter.sendMail(ownerMailOptions),
       transporter.sendMail(userConfirmationOptions)
     ]);
 
-    console.log('Confirmation emails sent successfully');
-
-    // Close transporter
-    transporter.close();
+    console.log('Confirmation emails sent successfully. Message IDs:', 
+      results.map(r => r.messageId).join(', '));
 
     // Clean up stored data
     otpStorage.delete(contactId);
@@ -376,7 +318,8 @@ exports.verifyOTP = async (req, res) => {
     console.error('Error details:', {
       message: error.message,
       code: error.code,
-      command: error.command
+      command: error.command,
+      response: error.response
     });
     
     res.status(500).json({
