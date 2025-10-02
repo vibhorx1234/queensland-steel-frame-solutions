@@ -11,16 +11,16 @@ services:
       - key: PORT
         value: 10000
       - key: EMAIL_HOST
-        sync: false
+        value: smtp.gmail.com
       - key: EMAIL_PORT
-        sync: false
+        value: 587
       - key: EMAIL_SECURE
-        sync: false
+        value: false
       - key: EMAIL_USER
-        sync: false
+        value: vibhorx1234@gmail.com
       - key: EMAIL_PASSWORD
         sync: false
       - key: OWNER_EMAIL
-        sync: false
+        value: agarwalmanish369@gmail.com
       - key: FRONTEND_URL
         value: https://queensland-steel-frame.onrender.com

@@ -9,29 +9,71 @@ const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Create nodemailer transporter
+// Create nodemailer transporter with better error handling and timeout settings
 const createTransporter = () => {
-  return nodemailer.createTransport({
+  const config = {
     host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
+    port: parseInt(process.env.EMAIL_PORT),
     secure: process.env.EMAIL_SECURE === 'true',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD
-    }
+    },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+    pool: true, // Use pooled connections
+    maxConnections: 5,
+    maxMessages: 100
+  };
+
+  // Add debug logging in development
+  if (process.env.NODE_ENV !== 'production') {
+    config.debug = true;
+    config.logger = true;
+  }
+
+  console.log('Creating transporter with config:', {
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    user: config.auth.user
   });
+
+  return nodemailer.createTransport(config);
+};
+
+// Verify transporter connection
+const verifyTransporter = async (transporter) => {
+  try {
+    await transporter.verify();
+    console.log('Email transporter verified successfully');
+    return true;
+  } catch (error) {
+    console.error('Email transporter verification failed:', error);
+    return false;
+  }
 };
 
 // Send OTP to user's email
 exports.sendOTP = async (req, res) => {
   try {
     const { name, email, phone, subject, message } = req.body;
-
+    
     // Validate required fields
     if (!name || !email || !phone || !subject || !message) {
       return res.status(400).json({
         success: false,
         message: 'All fields are required'
+      });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid email format'
       });
     }
 
@@ -48,6 +90,15 @@ exports.sendOTP = async (req, res) => {
 
     // Create transporter
     const transporter = createTransporter();
+
+    // Verify connection before sending
+    const isVerified = await verifyTransporter(transporter);
+    if (!isVerified) {
+      return res.status(500).json({
+        success: false,
+        message: 'Email service connection failed. Please try again later.'
+      });
+    }
 
     // Email template for OTP
     const mailOptions = {
@@ -93,8 +144,12 @@ exports.sendOTP = async (req, res) => {
       `
     };
 
-    // Send email
+    console.log('Attempting to send OTP email to:', email);
+
+    // Send email with timeout
     await transporter.sendMail(mailOptions);
+
+    console.log('OTP email sent successfully to:', email);
 
     res.status(200).json({
       success: true,
@@ -104,9 +159,16 @@ exports.sendOTP = async (req, res) => {
 
   } catch (error) {
     console.error('Error sending OTP:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command
+    });
+    
     res.status(500).json({
       success: false,
-      message: 'Failed to send OTP. Please try again.'
+      message: 'Failed to send OTP. Please try again.',
+      error: process.env.NODE_ENV !== 'production' ? error.message : undefined
     });
   }
 };
@@ -162,6 +224,15 @@ exports.verifyOTP = async (req, res) => {
 
     // Create transporter
     const transporter = createTransporter();
+
+    // Verify connection before sending
+    const isVerified = await verifyTransporter(transporter);
+    if (!isVerified) {
+      return res.status(500).json({
+        success: false,
+        message: 'Email service connection failed. Please try again later.'
+      });
+    }
 
     // Send notification to owner
     const ownerMailOptions = {
@@ -254,11 +325,15 @@ exports.verifyOTP = async (req, res) => {
       `
     };
 
+    console.log('Attempting to send confirmation emails...');
+
     // Send both emails
     await Promise.all([
       transporter.sendMail(ownerMailOptions),
       transporter.sendMail(userConfirmationOptions)
     ]);
+
+    console.log('Confirmation emails sent successfully');
 
     // Clean up stored data
     otpStorage.delete(contactId);
@@ -271,9 +346,16 @@ exports.verifyOTP = async (req, res) => {
 
   } catch (error) {
     console.error('Error verifying OTP:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command
+    });
+    
     res.status(500).json({
       success: false,
-      message: 'Failed to verify OTP. Please try again.'
+      message: 'Failed to verify OTP. Please try again.',
+      error: process.env.NODE_ENV !== 'production' ? error.message : undefined
     });
   }
 };
