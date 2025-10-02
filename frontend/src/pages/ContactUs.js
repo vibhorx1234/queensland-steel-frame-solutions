@@ -1,0 +1,245 @@
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import ContactForm from '../components/ContactForm';
+
+const ContactUs = () => {
+    const contactInfo = [
+        {
+            icon: React.createElement(LocationOnIcon),
+            title: 'Visit Us',
+            content: ['Queensland, Australia', 'Head Office Location']
+        },
+        {
+            icon: React.createElement(PhoneIcon),
+            title: 'Call Us',
+            content: ['+61 XXX XXX XXX', 'Mon - Fri: 8AM - 6PM']
+        },
+        {
+            icon: React.createElement(EmailIcon),
+            title: 'Email Us',
+            content: ['info@queenslandsteel.com.au', 'quotes@queenslandsteel.com.au']
+        },
+        {
+            icon: React.createElement(AccessTimeIcon),
+            title: 'Business Hours',
+            content: ['Monday - Friday: 8:00 AM - 6:00 PM', 'Saturday: 9:00 AM - 2:00 PM']
+        }
+    ];
+
+    return React.createElement(
+        'div',
+        { className: 'contact-page' },
+        // Hero Section
+        React.createElement(
+            'section',
+            { className: 'page-hero' },
+            React.createElement(
+                'div',
+                { className: 'container' },
+                React.createElement(
+                    'div',
+                    { className: 'page-hero-content fade-in' },
+                    React.createElement('h1', null, 'Contact Us'),
+                    React.createElement('p', null, 'Get in Touch for Your Next Project')
+                )
+            )
+        ),
+        // Contact Form and Info Section
+        React.createElement(
+            'section',
+            { className: 'section' },
+            React.createElement(
+                'div',
+                { className: 'container' },
+                React.createElement(
+                    Grid,
+                    { container: true, spacing: 5, alignItems: 'stretch' },
+                    // Contact Form
+                    React.createElement(
+                        Grid,
+                        { item: true, xs: 12, md: 7 },
+                        React.createElement(
+                            Card,
+                            { className: 'card slide-in-left', style: { height: '100%' } },
+                            React.createElement(
+                                CardContent,
+                                { style: { padding: '40px', height: '100%', display: 'flex', flexDirection: 'column' } },
+                                React.createElement(
+                                    'h2',
+                                    { style: { color: 'var(--primary-color)', marginBottom: '10px' } },
+                                    'Send Us a Message'
+                                ),
+                                React.createElement(
+                                    'p',
+                                    { style: { color: 'var(--text-secondary)', marginBottom: '30px' } },
+                                    'Fill out the form below and we\'ll get back to you as soon as possible'
+                                ),
+                                React.createElement(ContactForm)
+                            )
+                        )
+                    ),
+                    // Contact Information
+                    React.createElement(
+                        Grid,
+                        { item: true, xs: 12, md: 5 },
+                        React.createElement(
+                            'div',
+                            { className: 'slide-in-right', style: { height: '100%', display: 'flex', flexDirection: 'column' } },
+                            React.createElement(
+                                'h2',
+                                { style: { color: 'var(--primary-color)', marginBottom: '30px' } },
+                                'Contact Information'
+                            ),
+                            React.createElement(
+                                'div',
+                                { style: { display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 } },
+                                contactInfo.map((info, index) =>
+                                    React.createElement(
+                                        Card,
+                                        {
+                                            key: index,
+                                            className: 'card',
+                                            style: {
+                                                transition: 'all 0.3s ease',
+                                                flex: 1
+                                            },
+                                            onMouseEnter: (e) => {
+                                                e.currentTarget.style.transform = 'translateX(10px)';
+                                            },
+                                            onMouseLeave: (e) => {
+                                                e.currentTarget.style.transform = 'translateX(0)';
+                                            }
+                                        },
+                                        React.createElement(
+                                            CardContent,
+                                            { style: { display: 'flex', alignItems: 'flex-start', gap: '20px' } },
+                                            React.createElement(
+                                                'div',
+                                                {
+                                                    style: {
+                                                        width: '50px',
+                                                        height: '50px',
+                                                        borderRadius: '50%',
+                                                        backgroundColor: 'var(--primary-color)',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        flexShrink: 0
+                                                    }
+                                                },
+                                                React.cloneElement(info.icon, {
+                                                    style: { color: '#ffffff', fontSize: '1.5rem' }
+                                                })
+                                            ),
+                                            React.createElement(
+                                                'div',
+                                                null,
+                                                React.createElement(
+                                                    'h4',
+                                                    { style: { color: 'var(--primary-color)', marginBottom: '8px' } },
+                                                    info.title
+                                                ),
+                                                info.content.map((line, i) =>
+                                                    React.createElement(
+                                                        'p',
+                                                        {
+                                                            key: i,
+                                                            style: {
+                                                                color: 'var(--text-secondary)',
+                                                                margin: '4px 0',
+                                                                fontSize: '0.95rem'
+                                                            }
+                                                        },
+                                                        line
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+        // Map Section - FIXED
+        React.createElement(
+            'section',
+            {
+                className: 'section',
+                style: { backgroundColor: 'var(--surface-color)', paddingTop: '60px', paddingBottom: '60px' }
+            },
+            React.createElement(
+                'div',
+                { className: 'container' },
+                React.createElement(
+                    'div',
+                    {
+                        style: {
+                            width: '100%',
+                            backgroundColor: 'var(--background-color)',
+                            borderRadius: '12px',
+                            border: '2px solid var(--border-color)',
+                            overflow: 'hidden'
+                        }
+                    },
+                    // Google Map Embed - Using proper embed URL
+                    React.createElement(
+                        'iframe',
+                        {
+                            src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3540.3087755858547!2d153.01545!3d-27.518766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b915aa07768f26f%3A0x382e958ad9e6f7c9!2s193%2F49%20Station%20Rd%2C%20Yeerongpilly%20QLD%204105%2C%20Australia!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s",
+                            width: "100%",
+                            height: "450",
+                            style: { border: "0", display: 'block' },
+                            allowFullScreen: true,
+                            loading: "lazy",
+                            referrerPolicy: "no-referrer-when-downgrade"
+                        }
+                    ),
+                    // Title + clickable link
+                    React.createElement(
+                        'div',
+                        { style: { textAlign: 'center', padding: '20px', backgroundColor: 'var(--background-color)' } },
+                        React.createElement(LocationOnIcon, {
+                            style: { fontSize: '2.5rem', color: 'var(--primary-color)', marginBottom: '10px' }
+                        }),
+                        React.createElement(
+                            'h3',
+                            { style: { color: 'var(--text-primary)', marginBottom: '10px' } },
+                            'Find Us Here'
+                        ),
+                        React.createElement(
+                            'p',
+                            { style: { color: 'var(--text-secondary)', marginBottom: '10px' } },
+                            '193/49 Station Rd, Yeerongpilly QLD 4105, Australia'
+                        ),
+                        React.createElement(
+                            'a',
+                            {
+                                href: "https://www.google.com/maps/place/193%2F49+Station+Rd,+Yeerongpilly+QLD+4105,+Australia/@-27.518766,153.01545,17z/data=!3m1!4b1!4m6!3m5!1s0x6b915aa07768f26f:0x382e958ad9e6f7c9!8m2!3d-27.518766!4d153.01545!16s%2Fg%2F11c5q8yx1y",
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                style: { 
+                                    color: 'var(--primary-color)', 
+                                    textDecoration: 'underline',
+                                    fontSize: '1rem',
+                                    fontWeight: '500'
+                                }
+                            },
+                            'Open in Google Maps'
+                        )
+                    )
+                )
+            )
+        )
+    );
+};
+
+export default ContactUs;
