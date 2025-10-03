@@ -25,7 +25,8 @@ const ContactForm = () => {
   const [alert, setAlert] = useState({ show: false, type: '', message: '' });
   const [tempContactId, setTempContactId] = useState('');
 
-  const API_URL = 'https://queensland-steel-frame.onrender.com' || process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  // const API_URL = 'https://queensland-steel-frame.onrender.com' || process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   const handleChange = (e) => {
     setFormData({
