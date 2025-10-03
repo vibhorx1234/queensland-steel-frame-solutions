@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -6,10 +6,20 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import '../styles/Parallax.css';
 
 const Projects = () => {
   const [filter, setFilter] = useState('All');
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const modalImageRef = useRef(null);
+  const isScrollingRef = useRef(false);
 
   const projects = [
     {
@@ -17,8 +27,13 @@ const Projects = () => {
       category: 'Residential',
       location: 'Brisbane, QLD',
       year: '2024',
-      description: 'Premium steel frame construction for a luxury residential estate featuring 15 custom homes.',
-      image: 'https://images.unsplash.com/photo-1503594384566-461fe158e797?w=800&q=80&fit=crop',
+      description: 'Premium steel frame construction for a luxury residential estate featuring 15 custom homes with modern architectural design and sustainable building practices.',
+      images: [
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fit=crop'
+      ],
       scope: '15 homes, 2-story structures, custom designs'
     },
     {
@@ -26,8 +41,13 @@ const Projects = () => {
       category: 'Commercial',
       location: 'Gold Coast, QLD',
       year: '2024',
-      description: 'Modern 5-story office complex with state-of-the-art steel frame construction.',
-      image: 'https://images.unsplash.com/photo-1590496793907-1c2e5a04e63c?w=800&q=80&fit=crop',
+      description: 'Modern 5-story office complex with state-of-the-art steel frame construction, featuring open floor plans and energy-efficient design.',
+      images: [
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80&fit=crop'
+      ],
       scope: '5-story building, 5,000 sqm floor area'
     },
     {
@@ -35,8 +55,13 @@ const Projects = () => {
       category: 'Industrial',
       location: 'Townsville, QLD',
       year: '2023',
-      description: 'Large-scale warehouse facility with heavy-duty steel frame structure.',
-      image: 'https://images.unsplash.com/photo-1597476368913-f93b0c1b9c19?w=800&q=80&fit=crop',
+      description: 'Large-scale warehouse facility with heavy-duty steel frame structure, designed for maximum storage capacity and operational efficiency.',
+      images: [
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80&fit=crop'
+      ],
       scope: '10,000 sqm warehouse, high ceiling clearance'
     },
     {
@@ -44,8 +69,13 @@ const Projects = () => {
       category: 'Commercial',
       location: 'Cairns, QLD',
       year: '2023',
-      description: 'Multi-tenant retail shopping center with innovative steel frame design.',
-      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80&fit=crop',
+      description: 'Multi-tenant retail shopping center with innovative steel frame design, featuring modern aesthetics and customer-friendly layouts.',
+      images: [
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1567958451986-2de427a4a0be?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80&fit=crop'
+      ],
       scope: '20 retail units, covered walkways'
     },
     {
@@ -53,8 +83,13 @@ const Projects = () => {
       category: 'Residential',
       location: 'Sunshine Coast, QLD',
       year: '2023',
-      description: '4-story apartment complex featuring 32 residential units with steel frame construction.',
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+      description: '4-story apartment complex featuring 32 residential units with steel frame construction, balconies, and contemporary amenities.',
+      images: [
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fit=crop'
+      ],
       scope: '32 apartments, 4-story structure'
     },
     {
@@ -62,8 +97,13 @@ const Projects = () => {
       category: 'Industrial',
       location: 'Rockhampton, QLD',
       year: '2022',
-      description: 'Heavy industrial manufacturing facility with specialized steel framework.',
-      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=800&q=80&fit=crop',
+      description: 'Heavy industrial manufacturing facility with specialized steel framework, designed for high-load capacity and durability.',
+      images: [
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80&fit=crop',
+        'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80&fit=crop'
+      ],
       scope: '8,000 sqm facility, reinforced structure'
     }
   ];
@@ -82,6 +122,50 @@ const Projects = () => {
     };
     return colors[category] || 'default';
   };
+
+  const handleOpenModal = (project) => {
+    setSelectedProject(project);
+    setCurrentImageIndex(0);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedProject(null);
+    setCurrentImageIndex(0);
+  };
+
+  const handleModalWheel = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isScrollingRef.current || !selectedProject) return;
+    isScrollingRef.current = true;
+
+    const direction = e.deltaY > 0 ? 1 : -1;
+    const newIndex = Math.max(0, Math.min(selectedProject.images.length - 1, currentImageIndex + direction));
+    
+    setCurrentImageIndex(newIndex);
+
+    setTimeout(() => {
+      isScrollingRef.current = false;
+    }, 300);
+  };
+
+  useEffect(() => {
+    const modalImage = modalImageRef.current;
+    if (!modalImage || !openModal) return;
+
+    const wheelHandler = (e) => {
+      e.preventDefault();
+    };
+
+    modalImage.addEventListener('wheel', wheelHandler, { passive: false });
+
+    return () => {
+      modalImage.removeEventListener('wheel', wheelHandler);
+    };
+  }, [openModal]);
 
   return React.createElement(
     'div',
@@ -160,7 +244,16 @@ const Projects = () => {
                     animationDelay: `${index * 0.1}s`,
                     height: '100%',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    transition: 'box-shadow 0.3s ease',
+                    cursor: 'pointer'
+                  },
+                  onClick: () => handleOpenModal(project),
+                  onMouseEnter: (e) => {
+                    e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.15)';
+                  },
+                  onMouseLeave: (e) => {
+                    e.currentTarget.style.boxShadow = '';
                   }
                 },
                 React.createElement(
@@ -169,8 +262,11 @@ const Projects = () => {
                   React.createElement(CardMedia, {
                     component: 'img',
                     height: '220',
-                    image: project.image,
-                    alt: project.title
+                    image: project.images[0],
+                    alt: project.title,
+                    style: {
+                      transition: 'none'
+                    }
                   })
                 ),
                 React.createElement(
@@ -203,7 +299,7 @@ const Projects = () => {
                   React.createElement(
                     'p',
                     { style: { color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '15px', fontSize: '0.95rem' } },
-                    project.description
+                    project.description.substring(0, 100) + '...'
                   ),
                   React.createElement(
                     'div',
@@ -290,6 +386,151 @@ const Projects = () => {
                 )
               )
             )
+          )
+        )
+      )
+    ),
+    // Project Modal
+    selectedProject && React.createElement(
+      Dialog,
+      {
+        open: openModal,
+        onClose: handleCloseModal,
+        maxWidth: 'md',
+        fullWidth: true,
+        PaperProps: {
+          style: {
+            backgroundColor: '#fff',
+            borderRadius: '12px'
+          }
+        }
+      },
+      React.createElement(
+        DialogTitle,
+        { style: { paddingRight: '60px' } },
+        selectedProject.title,
+        React.createElement(
+          IconButton,
+          {
+            onClick: handleCloseModal,
+            style: {
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: '#666'
+            }
+          },
+          React.createElement(CloseIcon)
+        )
+      ),
+      React.createElement(
+        DialogContent,
+        { dividers: true },
+        React.createElement(
+          'div',
+          {
+            ref: modalImageRef,
+            onWheel: handleModalWheel,
+            style: {
+              position: 'relative',
+              width: '100%',
+              height: '400px',
+              overflow: 'hidden',
+              marginBottom: '20px',
+              cursor: 'ns-resize',
+              borderRadius: '8px'
+            }
+          },
+          React.createElement(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                transform: `translateY(-${currentImageIndex * 400}px)`
+              }
+            },
+            selectedProject.images.map((image, idx) =>
+              React.createElement('img', {
+                key: idx,
+                src: image,
+                alt: `${selectedProject.title} - View ${idx + 1}`,
+                style: {
+                  width: '100%',
+                  height: '400px',
+                  objectFit: 'cover',
+                  display: 'block',
+                  userSelect: 'none'
+                }
+              })
+            )
+          ),
+          React.createElement(
+            'div',
+            {
+              style: {
+                position: 'absolute',
+                bottom: '15px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                gap: '8px',
+                zIndex: 10,
+                pointerEvents: 'none'
+              }
+            },
+            selectedProject.images.map((_, idx) =>
+              React.createElement(
+                'div',
+                {
+                  key: idx,
+                  style: {
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '50%',
+                    backgroundColor: idx === currentImageIndex ? '#fff' : 'rgba(255, 255, 255, 0.5)',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                  }
+                }
+              )
+            )
+          )
+        ),
+        React.createElement(
+          'div',
+          { style: { marginTop: '10px' } },
+          React.createElement(
+            'div',
+            { style: { marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '10px' } },
+            React.createElement(Chip, {
+              label: selectedProject.category,
+              color: getCategoryColor(selectedProject.category),
+              size: 'small'
+            }),
+            React.createElement(
+              'span',
+              { style: { color: '#666', fontSize: '0.9rem' } },
+              selectedProject.year
+            )
+          ),
+          React.createElement(
+            'p',
+            { style: { color: '#666', fontSize: '0.95rem', marginBottom: '8px' } },
+            React.createElement('strong', null, 'Location: '),
+            selectedProject.location
+          ),
+          React.createElement(
+            'p',
+            { style: { color: '#666', fontSize: '0.95rem', marginBottom: '15px' } },
+            React.createElement('strong', null, 'Scope: '),
+            selectedProject.scope
+          ),
+          React.createElement(
+            'p',
+            { style: { color: '#333', fontSize: '1rem', lineHeight: '1.6' } },
+            selectedProject.description
           )
         )
       )

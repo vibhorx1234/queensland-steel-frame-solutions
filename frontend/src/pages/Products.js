@@ -25,7 +25,7 @@ const Products = () => {
       name: 'Heavy Gauge Steel Frames',
       category: 'Commercial',
       description: 'Robust heavy gauge steel frames designed for commercial and industrial applications requiring maximum structural integrity.',
-      image: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80&fit=crop',
       specifications: [
         'Grade: G300-G550',
         'Thickness: 1.0mm - 6.0mm',
@@ -38,7 +38,7 @@ const Products = () => {
       name: 'Roof Trusses',
       category: 'Structural',
       description: 'Precision-engineered steel roof trusses providing superior support and allowing for versatile architectural designs.',
-      image: 'https://images.unsplash.com/photo-1460574283810-2aab119d8511?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80&fit=crop',
       specifications: [
         'Custom span lengths',
         'Multiple pitch options',
@@ -51,7 +51,7 @@ const Products = () => {
       name: 'Wall Frames',
       category: 'Structural',
       description: 'Comprehensive wall framing systems engineered for both load-bearing and non-load-bearing applications.',
-      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80&fit=crop',
       specifications: [
         'Standard stud spacing',
         'Various heights',
@@ -64,7 +64,7 @@ const Products = () => {
       name: 'Floor Joists',
       category: 'Structural',
       description: 'High-strength steel floor joists offering excellent load distribution and minimal deflection for stable flooring systems.',
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80&fit=crop',
       specifications: [
         'Span up to 6m',
         'Load-rated',
@@ -77,7 +77,7 @@ const Products = () => {
       name: 'Steel Beams & Columns',
       category: 'Industrial',
       description: 'Industrial-grade steel beams and columns for large-scale construction projects requiring maximum structural support.',
-      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&q=80&fit=crop',
       specifications: [
         'Various sizes',
         'Universal beams',

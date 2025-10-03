@@ -19,7 +19,7 @@ const Services = () => {
       icon: React.createElement(HomeWorkIcon),
       title: 'Residential Construction',
       description: 'Premium steel frame solutions for homes, extensions, and renovations. We deliver durable and energy-efficient residential structures tailored to your needs.',
-      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80&fit=crop',
       features: [
         'Custom home designs',
         'House extensions',
@@ -31,7 +31,7 @@ const Services = () => {
       icon: React.createElement(ApartmentIcon),
       title: 'Commercial Projects',
       description: 'Robust steel frame construction for commercial buildings, office complexes, and retail spaces designed for longevity and efficiency.',
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80&fit=crop',
       features: [
         'Office buildings',
         'Retail complexes',
@@ -55,7 +55,7 @@ const Services = () => {
       icon: React.createElement(DesignServicesIcon),
       title: 'Custom Design Services',
       description: 'Collaborative design solutions that bring your vision to life with precision engineering and innovative architectural approaches.',
-      image: 'https://images.unsplash.com/photo-1503594384566-461fe158e797?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80&fit=crop',
       features: [
         'Architectural design',
         '3D modeling',
@@ -67,7 +67,7 @@ const Services = () => {
       icon: React.createElement(BuildIcon),
       title: 'Installation & Erection',
       description: 'Professional installation services ensuring precise assembly and structural integrity for every project we undertake.',
-      image: 'https://images.unsplash.com/photo-1590496793907-1c2e5a04e63c?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80&fit=crop',
       features: [
         'On-site installation',
         'Crane services',
@@ -79,7 +79,7 @@ const Services = () => {
       icon: React.createElement(SupportAgentIcon),
       title: 'Ongoing Support',
       description: 'Comprehensive after-sales support, maintenance services, and consultation to ensure long-term satisfaction and performance.',
-      image: 'https://images.unsplash.com/photo-1597476368913-f93b0c1b9c19?w=600&q=80&fit=crop',
+      image: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&q=80&fit=crop',
       features: [
         'Maintenance services',
         'Warranty support',
@@ -263,7 +263,7 @@ const Services = () => {
             { to: '/contact', style: { textDecoration: 'none' } },
             React.createElement(
               Button,
-              { variant: 'contained', size: 'large', className: 'btn btn-primary cta-button' },
+              { variant: 'contained', size: 'large', className: 'btn btn-primary' },
               'Request a Quote'
             )
           )
