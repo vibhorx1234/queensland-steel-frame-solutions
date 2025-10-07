@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import '../styles/Header.css';
 import ThemeToggle from './ThemeToggle';
+import logo from '../assets/images/logo.jpg';
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -101,23 +102,16 @@ const Header = () => {
             'div',
             { className: 'logo' },
             React.createElement('img', {
-              src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=200&h=60&fit=crop&q=80&auto=format',
-              alt: 'Queensland Steel Frame Solutions',
+              src: logo,
+              alt: 'Aussie Frame Systems',
               className: 'logo-image',
               style: { 
                 display: 'block',
-                height: '50px',
+                height: '80px',
                 width: 'auto',
-                objectFit: 'cover',
+                objectFit: 'contain',
                 borderRadius: '6px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-              },
-              onError: (e) => {
-                console.error('Primary logo failed, using fallback');
-                e.target.src = 'https://via.placeholder.com/200x60/1a2b4a/ffffff?text=QLD+Steel+Frame';
-              },
-              onLoad: () => {
-                console.log('Logo loaded successfully');
+                maxHeight: '80px'
               }
             })
           )
@@ -138,21 +132,22 @@ const Header = () => {
             )
           )
         ),
-        // Theme toggle on extreme right
+        // Theme toggle on extreme right (Desktop only)
         React.createElement(
           'div',
           { className: 'nav-actions' },
           React.createElement(ThemeToggle)
         ),
-        // Mobile menu button
+        // Mobile menu button with theme toggle
         React.createElement(
           'div',
           { className: 'nav-mobile' },
+          React.createElement(ThemeToggle),
           React.createElement(
             IconButton,
             {
               onClick: handleDrawerToggle,
-              sx: { color: 'var(--text-primary)' }
+              sx: { color: 'var(--text-primary)', marginLeft: '10px' }
             },
             React.createElement(MenuIcon)
           )

@@ -1,7 +1,7 @@
 {
-  "name": "queensland-steel-backend",
+  "name": "aussie-frame-backend",
   "version": "1.0.0",
-  "description": "Backend API for Queensland Steel Frame Solutions",
+  "description": "Backend API for Aussie Frame Systems",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,10 +9,9 @@
     "build": "cd ../frontend && npm install && npm run build"
   },
   "keywords": [
-    "queensland",
-    "steel",
+    "aussie",
     "frame",
-    "solutions",
+    "systems",
     "backend",
     "api"
   ],

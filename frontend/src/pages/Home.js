@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -8,126 +8,314 @@ import CardMedia from '@mui/material/CardMedia';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import BuildIcon from '@mui/icons-material/Build';
-import EngineeringIcon from '@mui/icons-material/Engineering';
-import VerifiedIcon from '@mui/icons-material/Verified';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import RoofingIcon from '@mui/icons-material/Roofing';
+import LayersIcon from '@mui/icons-material/Layers';
 import '../styles/Home.css';
+import s1 from '../assets/images/services/eng.jpg';
+import s2 from '../assets/images/services/fab1.jpg';
+import s3 from '../assets/images/services/supply1.jpg';
+import prod1 from '../assets/images/products/prod1.jpg';
+import prod2 from '../assets/images/products/prod2.jpg';
+import prod3 from '../assets/images/products/prod3.jpg';
+
+import p6_1 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/1.jpg';
+import p6_2 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/2.jpg';
+import p6_3 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/3.jpg';
+import p6_4 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/4.jpg';
+import p6_5 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/5.jpg';
+import p6_6 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/6.jpg';
+import p6_7 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/7.jpg';
+import p6_8 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/8.jpg';
+import p6_9 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/9.jpg';
+import p6_10 from '../assets/images/projects/ZARRAFFAS CURRUMBIN/10.jpg';
+
+import p3_1 from '../assets/images/projects/MAIN BUILDING GEMLIFE/1.jpg';
+import p3_2 from '../assets/images/projects/MAIN BUILDING GEMLIFE/2.jpg';
+import p3_3 from '../assets/images/projects/MAIN BUILDING GEMLIFE/3.jpg';
+import p3_4 from '../assets/images/projects/MAIN BUILDING GEMLIFE/4.jpg';
+import p3_5 from '../assets/images/projects/MAIN BUILDING GEMLIFE/5.jpg';
+import p3_6 from '../assets/images/projects/MAIN BUILDING GEMLIFE/6.jpg';
+
+import p4_1 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/1.jpg';
+import p4_2 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/2.jpg';
+import p4_3 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/3.jpg';
+import p4_4 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/4.jpg';
+import p4_5 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/5.jpg';
+import p4_6 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/6.jpg';
+import p4_7 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/7.jpg';
+import p4_8 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/8.jpg';
+import p4_9 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/9.jpg';
+import p4_10 from '../assets/images/projects/TOWN HOUSES SOUTHPORT/10.jpg';
+
+import img1 from '../assets/images/home-hero.jpg';
+import img2 from '../assets/images/about.jpg';
 
 const Home = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [modalType, setModalType] = useState(''); // 'service', 'product', or 'project'
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const modalImageRef = useRef(null);
-  const isScrollingRef = useRef(false);
 
   const services = [
     {
-      title: 'Steel Frame Construction',
-      description: 'Premium quality steel frame construction for residential and commercial projects.',
+      icon: React.createElement(DesignServicesIcon),
+      title: 'Engineering & Detailing',
+      description: 'Meticulous engineering and detailing excellence ensuring precision and care in every design.',
+      image: s1,
+      fullContent: {
+        sections: [
+          {
+            title: 'The Art of Engineering',
+            content: 'Our commitment to engineering excellence is at the heart of what we do. We embrace the latest advancements in engineering technology and techniques to create steel structures that stand as paragons of strength and reliability.'
+          },
+          {
+            title: 'Meticulous Detailing',
+            content: 'In the realm of steel structures, every detail matters. That\'s why Aussie Frame Systems places a premium on meticulous detailing. We leave no bolt, no joint, and no connection to chance.'
+          },
+          {
+            title: 'Sustainability by Design',
+            content: 'In an age of environmental consciousness, our engineering and detailing process also encompasses sustainability. We incorporate eco-friendly practices into our designs, promoting energy efficiency and reducing waste.'
+          }
+        ]
+      }
+    },
+    {
       icon: React.createElement(BuildIcon),
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&fit=crop'
+      title: 'Fabrication & Production',
+      description: 'Advanced fabrication using the renowned Scottsdale system and our proprietary Quick Frame machine.',
+      image: s2,
+      fullContent: {
+        intro: 'At Aussie Frame Systems, our dedication to superior construction solutions drives our commitment to innovation and excellence.',
+        sections: [
+          {
+            title: 'Scottsdale System: Proven Excellence',
+            content: 'The Scottsdale system stands as a testament to precision engineering and reliability. Widely recognized in the construction sector, this system embodies excellence in steel framing.'
+          },
+          {
+            title: 'Quick Frame Innovation',
+            content: 'Our proprietary Quick Frame system is a testament to our commitment to innovation and efficiency. The Quick Frame machine streamlines the fabrication of frames and trusses, ensuring high precision and reduced lead times.'
+          }
+        ]
+      }
     },
     {
-      title: 'Custom Design Solutions',
-      description: 'Tailored steel frame designs to meet your specific project requirements.',
-      icon: React.createElement(EngineeringIcon),
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&fit=crop'
+      icon: React.createElement(LocalShippingIcon),
+      title: 'Supply & Installation',
+      description: 'Queensland-wide supply and installation services delivering steel framing solutions to every corner of the state.',
+      image: s3,
+      fullContent: {
+        intro: 'When it comes to steel framing solutions in Queensland, look no further than Aussie Frame Systems. We\'re your go-to choice for supply and installation services.',
+        sections: [
+          {
+            title: 'Queensland-Wide Reach',
+            content: 'From the bustling cities to the serene countryside, we serve all corners of Queensland. No location is too remote for our dedicated team.'
+          },
+          {
+            title: 'Quality You Can Trust',
+            content: 'We take pride in delivering steel framing solutions that not only meet but exceed industry standards. Your project\'s structural integrity is in safe hands with us.'
+          }
+        ]
+      }
+    }
+  ];
+
+  const products = [
+    {
+      icon: React.createElement(HomeWorkIcon),
+      name: 'Wall Frames',
+      category: 'Structural',
+      description: 'Internal & external walls for ground and all upper levels. LGS screw fixed assembly wall frames designed to nominated wind codes.',
+      image: prod1,
+      fullContent: {
+        intro: 'Our wall frames are engineered for both internal and external applications, designed to meet the highest standards of structural integrity and wind resistance.',
+        sections: [
+          {
+            title: 'Design Specifications',
+            content: 'LGS screw fixed assembly wall frames are available in 70mm or 90mm thickness, designed and fabricated to the nominated wind code including all nominated openings.'
+          },
+          {
+            title: 'Applications',
+            content: 'Suitable for ground level and all upper levels, our wall frames are ideal for residential, commercial, and industrial construction.'
+          }
+        ]
+      }
     },
     {
-      title: 'Quality Assurance',
-      description: 'Certified quality standards and comprehensive project management.',
-      icon: React.createElement(VerifiedIcon),
-      image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80&fit=crop'
+      icon: React.createElement(RoofingIcon),
+      name: 'Roof Trusses',
+      category: 'Structural',
+      description: 'Engineered roof trusses designed to nominated wind loads. Bolted assembly trusses can span up to ten meters.',
+      image: prod2,
+      fullContent: {
+        intro: 'Our engineered roof trusses provide superior structural support while allowing for versatile architectural designs.',
+        sections: [
+          {
+            title: 'Truss Specifications',
+            content: 'Engineered roof trusses generally vary from 900mm to maximum 1200mm centres for sheet roof or tile roof applications. Designed to nominated wind loads.'
+          },
+          {
+            title: 'Material & Construction',
+            content: 'Our bolted assembly trusses are manufactured using 0.75mm or 0.95mm premium grade steel, capable of spanning up to ten meters on a single span length.'
+          }
+        ]
+      }
+    },
+    {
+      icon: React.createElement(LayersIcon),
+      name: 'Floor Joists',
+      category: 'Structural',
+      description: 'Engineered trussed/webbed floor joists 355mm deep allowing ease of access for services.',
+      image: prod3,
+      fullContent: {
+        intro: 'Our engineered floor joists provide exceptional strength and functionality, with integrated design features that simplify construction.',
+        sections: [
+          {
+            title: 'Joist Design',
+            content: 'Engineered trussed/webbed floor joists 355mm deep at maximum 450mm centres. The open webbed design allows ease of access for electrical, plumbing, and HVAC services.'
+          },
+          {
+            title: 'Load Distribution',
+            content: 'Our floor joists are engineered to provide optimal load distribution across the floor system, ensuring minimal deflection and a solid, stable platform.'
+          }
+        ]
+      }
     }
   ];
 
   const projects = [
     {
-      title: 'Residential Complex',
-      location: 'Brisbane, QLD',
-      description: 'Modern residential complex featuring premium steel frame construction with sustainable design principles.',
+      title: "ZARRAFFA'S CURRUMBIN",
+      category: 'Commercial',
+      location: 'Currumbin, QLD',
       year: '2024',
-      scope: '25 residential units, 3-story structure',
-      images: [
-        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fit=crop'
-      ]
+      description: 'Commercial steel frame construction for Zarraffa\'s Coffee location in Currumbin.',
+      images: [p6_1, p6_2, p6_3, p6_4, p6_5, p6_6, p6_7, p6_8, p6_9, p6_10],
+      scope: 'Commercial retail space, steel frame structure',
+      fullContent: {
+        sections: [
+          {
+            title: 'Project Overview',
+            content: 'The Zarraffa\'s Currumbin project represents our commitment to delivering high-quality commercial steel frame solutions for the retail and hospitality sector.'
+          },
+          {
+            title: 'Construction Details',
+            content: 'We provided comprehensive steel frame construction including wall frames, roof trusses, and structural steel components with careful attention to aesthetic appeal and structural integrity.'
+          }
+        ]
+      }
     },
     {
-      title: 'Commercial Building',
-      location: 'Gold Coast, QLD',
-      description: 'State-of-the-art commercial office complex with innovative steel framework and modern amenities.',
+      title: 'TOWN HOUSES SOUTHPORT',
+      category: 'Residential',
+      location: 'Southport, QLD',
       year: '2024',
-      scope: '5-story building, 6,000 sqm floor area',
-      images: [
-        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80&fit=crop'
-      ]
+      description: 'Multi-unit townhouse development featuring modern steel frame construction.',
+      images: [p4_1, p4_2, p4_3, p4_4, p4_5, p4_6, p4_7, p4_8, p4_9, p4_10],
+      scope: 'Multi-unit residential development, 2-story townhouses',
+      fullContent: {
+        sections: [
+          {
+            title: 'Development Overview',
+            content: 'The Southport Townhouses project showcases our expertise in multi-residential steel frame construction featuring multiple two-story townhouses.'
+          },
+          {
+            title: 'Structural Design',
+            content: 'Each townhouse was constructed using light gauge steel frames for walls, engineered roof trusses, and floor joists allowing for open-plan living areas.'
+          }
+        ]
+      }
     },
     {
-      title: 'Industrial Warehouse',
-      location: 'Townsville, QLD',
-      description: 'Heavy-duty industrial warehouse facility designed for maximum efficiency and durability.',
+      title: 'MAIN BUILDING GEMLIFE',
+      category: 'Commercial',
+      location: 'Queensland',
       year: '2023',
-      scope: '12,000 sqm warehouse, reinforced steel structure',
-      images: [
-        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800&q=80&fit=crop',
-        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80&fit=crop'
-      ]
+      description: 'Large-scale commercial development for GemLife retirement community.',
+      images: [p3_1, p3_2, p3_3, p3_4, p3_5, p3_6],
+      scope: 'Community center, commercial-grade steel construction',
+      fullContent: {
+        sections: [
+          {
+            title: 'Community Development',
+            content: 'The GemLife Main Building project represents one of our significant commercial undertakings in the retirement community sector.'
+          },
+          {
+            title: 'Construction Scope',
+            content: 'Our team delivered complete steel frame solutions including structural steel posts and beams for large open spaces, wall frames, and roof trusses.'
+          }
+        ]
+      }
     }
   ];
 
-  const handleOpenModal = (project) => {
-    setSelectedProject(project);
+  const handleOpenModal = (item, type) => {
+    setSelectedItem(item);
+    setModalType(type);
     setCurrentImageIndex(0);
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    setSelectedProject(null);
+    setSelectedItem(null);
+    setModalType('');
     setCurrentImageIndex(0);
   };
 
-  const handleModalWheel = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isScrollingRef.current || !selectedProject) return;
-    isScrollingRef.current = true;
-
-    const direction = e.deltaY > 0 ? 1 : -1;
-    const newIndex = Math.max(0, Math.min(selectedProject.images.length - 1, currentImageIndex + direction));
-    
-    setCurrentImageIndex(newIndex);
-
-    setTimeout(() => {
-      isScrollingRef.current = false;
-    }, 300);
+  const handlePrevImage = () => {
+    if (selectedItem && selectedItem.images) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? selectedItem.images.length - 1 : prev - 1
+      );
+    }
   };
 
-  useEffect(() => {
-    const modalImage = modalImageRef.current;
-    if (!modalImage || !openModal) return;
+  const handleNextImage = () => {
+    if (selectedItem && selectedItem.images) {
+      setCurrentImageIndex((prev) =>
+        prev === selectedItem.images.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
 
-    const wheelHandler = (e) => {
-      e.preventDefault();
-    };
+  const renderModalContent = (item) => {
+    if (!item.fullContent) return null;
+    const { fullContent } = item;
 
-    modalImage.addEventListener('wheel', wheelHandler, { passive: false });
+    return (
+      <div>
+        {fullContent.intro && (
+          <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '24px' }}>
+            {fullContent.intro}
+          </p>
+        )}
 
-    return () => {
-      modalImage.removeEventListener('wheel', wheelHandler);
-    };
-  }, [openModal]);
+        {fullContent.sections.map((section, index) => (
+          <div key={index} style={{ marginBottom: '24px' }}>
+            <h3 style={{ color: 'var(--primary-color)', marginBottom: '12px', fontSize: '1.2rem' }}>
+              {section.title}
+            </h3>
+            {section.content && (
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '16px' }}>
+                {section.content}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return React.createElement(
     'div',
@@ -138,9 +326,9 @@ const Home = () => {
       { className: 'hero-section' },
       React.createElement(
         'div',
-        { 
+        {
           className: 'hero-background',
-          style: { backgroundImage: 'url(https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1920&q=80&fit=crop)' }
+          style: { backgroundImage: `url(${img1})` }
         }
       ),
       React.createElement(
@@ -200,7 +388,7 @@ const Home = () => {
             React.createElement(
               'div',
               { className: 'about-content slide-in-left' },
-              React.createElement('h2', null, 'About Queensland Steel Frame'),
+              React.createElement('h2', null, 'About Aussie Frame Systems'),
               React.createElement(
                 'p',
                 null,
@@ -229,7 +417,7 @@ const Home = () => {
               'div',
               { className: 'image-wrapper slide-in-right' },
               React.createElement('img', {
-                src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop',
+                src: img2,
                 alt: 'Steel Frame Construction',
                 className: 'about-image'
               })
@@ -259,23 +447,43 @@ const Home = () => {
               { item: true, xs: 12, sm: 6, md: 4, key: index },
               React.createElement(
                 Card,
-                { className: 'service-card scale-up', style: { animationDelay: `${index * 0.2}s` } },
+                {
+                  className: 'service-card scale-up',
+                  style: {
+                    animationDelay: `${index * 0.2}s`,
+                    cursor: 'pointer',
+                    height: '100%'
+                  },
+                  onClick: () => handleOpenModal(service, 'service')
+                },
                 React.createElement(CardMedia, {
                   component: 'img',
-                  height: '200',
+                  height: '240',
                   image: service.image,
-                  alt: service.title
+                  alt: service.title,
+                  style: {
+                    objectFit: 'cover',
+                    width: '100%',
+                    minHeight: '240px',
+                    maxHeight: '240px'
+                  }
                 }),
                 React.createElement(
                   CardContent,
-                  null,
+                  {
+                    style: {
+                      minHeight: '200px',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }
+                  },
                   React.createElement(
                     'div',
                     { className: 'service-icon' },
                     service.icon
                   ),
-                  React.createElement('h3', null, service.title),
-                  React.createElement('p', null, service.description)
+                  React.createElement('h3', { style: { marginBottom: '12px' } }, service.title),
+                  React.createElement('p', { style: { flex: 1 } }, service.description)
                 )
               )
             )
@@ -283,7 +491,7 @@ const Home = () => {
         ),
         React.createElement(
           'div',
-          { className: 'section-cta' },
+          { className: 'section-cta', style: { marginBottom: '-80px' } },
           React.createElement(
             Link,
             { to: '/services', style: { textDecoration: 'none' } },
@@ -296,7 +504,98 @@ const Home = () => {
         )
       )
     ),
-    // Projects Preview Section with Modal
+    // Products Preview Section
+    React.createElement(
+      'section',
+      { className: 'section products-preview', style: { backgroundColor: 'var(--surface-color)' } },
+      React.createElement(
+        'div',
+        { className: 'container' },
+        React.createElement(
+          'div',
+          { className: 'section-title' },
+          React.createElement('h2', null, 'Our Products')
+        ),
+        React.createElement(
+          Grid,
+          { container: true, spacing: 4 },
+          products.map((product, index) =>
+            React.createElement(
+              Grid,
+              { item: true, xs: 12, sm: 6, md: 4, key: index },
+              React.createElement(
+                Card,
+                {
+                  className: 'service-card scale-up',
+                  style: {
+                    animationDelay: `${index * 0.2}s`,
+                    cursor: 'pointer',
+                    height: '100%'
+                  },
+                  onClick: () => handleOpenModal(product, 'product')
+                },
+                React.createElement(CardMedia, {
+                  component: 'img',
+                  height: '240',
+                  image: product.image,
+                  alt: product.name,
+                  style: {
+                    objectFit: 'cover',
+                    width: '100%',
+                    minHeight: '240px',
+                    maxHeight: '240px'
+                  }
+                }),
+                React.createElement(
+                  CardContent,
+                  {
+                    style: {
+                      minHeight: '220px',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }
+                  },
+                  React.createElement(
+                    'div',
+                    { style: { marginBottom: '12px' } },
+                    React.createElement(Chip, {
+                      label: product.category,
+                      size: 'small',
+                      sx: {
+                        backgroundColor: 'var(--primary-color)',
+                        color: '#ffffff',
+                        fontWeight: '500'
+                      }
+                    })
+                  ),
+                  React.createElement(
+                    'div',
+                    { className: 'service-icon' },
+                    product.icon
+                  ),
+                  React.createElement('h3', { style: { marginBottom: '12px' } }, product.name),
+                  React.createElement('p', { style: { flex: 1 } }, product.description)
+                )
+              )
+            )
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'section-cta' },
+          React.createElement(
+            Link,
+            { to: '/products', style: { textDecoration: 'none' } },
+            React.createElement(
+              Button,
+              { variant: 'contained', className: 'btn btn-primary' },
+              'View All Products'
+            )
+          )
+        )
+      )
+    ),
+    // Projects Preview Section
     React.createElement(
       'section',
       { className: 'section projects-preview' },
@@ -317,14 +616,14 @@ const Home = () => {
               { item: true, xs: 12, sm: 6, md: 4, key: index },
               React.createElement(
                 Card,
-                { 
-                  className: 'project-card fade-in', 
-                  style: { 
+                {
+                  className: 'project-card fade-in',
+                  style: {
                     animationDelay: `${index * 0.2}s`,
                     transition: 'box-shadow 0.3s ease',
                     cursor: 'pointer'
                   },
-                  onClick: () => handleOpenModal(project),
+                  onClick: () => handleOpenModal(project, 'project'),
                   onMouseEnter: (e) => {
                     e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.15)';
                   },
@@ -337,19 +636,47 @@ const Home = () => {
                   { className: 'image-wrapper' },
                   React.createElement(CardMedia, {
                     component: 'img',
-                    height: '250',
+                    height: '240',
                     image: project.images[0],
                     alt: project.title,
                     style: {
-                      transition: 'none'
+                      transition: 'none',
+                      objectFit: 'cover',
+                      width: '100%',
+                      minHeight: '240px',
+                      maxHeight: '240px'
                     }
                   })
                 ),
                 React.createElement(
                   CardContent,
-                  null,
-                  React.createElement('h3', null, project.title),
-                  React.createElement('p', { className: 'project-location' }, project.location)
+                  {
+                    style: {
+                      minHeight: '180px',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }
+                  },
+                  React.createElement(
+                    'div',
+                    { style: { marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+                    React.createElement(Chip, {
+                      label: project.category,
+                      size: 'small',
+                      sx: {
+                        backgroundColor: 'var(--primary-color)',
+                        color: '#ffffff',
+                        fontWeight: '500'
+                      }
+                    }),
+                    React.createElement(
+                      'span',
+                      { style: { color: 'var(--text-secondary)', fontSize: '0.85rem' } },
+                      project.year
+                    )
+                  ),
+                  React.createElement('h3', { style: { marginBottom: '8px' } }, project.title),
+                  React.createElement('p', { className: 'project-location', style: { marginTop: 'auto' } }, '📍 ' + project.location)
                 )
               )
             )
@@ -394,8 +721,8 @@ const Home = () => {
         )
       )
     ),
-    // Project Modal
-    selectedProject && React.createElement(
+    // Universal Modal
+    selectedItem && React.createElement(
       Dialog,
       {
         open: openModal,
@@ -403,131 +730,234 @@ const Home = () => {
         maxWidth: 'md',
         fullWidth: true,
         PaperProps: {
-          style: {
-            backgroundColor: '#fff',
-            borderRadius: '12px'
+          sx: {
+            backgroundColor: 'var(--surface-color)',
+            color: 'var(--text-primary)'
           }
         }
       },
       React.createElement(
         DialogTitle,
-        { style: { paddingRight: '60px' } },
-        selectedProject.title,
+        {
+          sx: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            pb: 2,
+            borderBottom: '1px solid var(--border-color)'
+          }
+        },
+        React.createElement(
+          'span',
+          { style: { color: 'var(--primary-color)', fontSize: '1.5rem', fontWeight: '600' } },
+          selectedItem.title || selectedItem.name
+        ),
         React.createElement(
           IconButton,
-          {
-            onClick: handleCloseModal,
-            style: {
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: '#666'
-            }
-          },
+          { onClick: handleCloseModal, sx: { color: 'var(--text-secondary)' } },
           React.createElement(CloseIcon)
         )
       ),
       React.createElement(
         DialogContent,
-        { dividers: true },
-        React.createElement(
-          'div',
-          {
-            ref: modalImageRef,
-            onWheel: handleModalWheel,
-            style: {
-              position: 'relative',
-              width: '100%',
-              height: '400px',
-              overflow: 'hidden',
-              marginBottom: '20px',
-              cursor: 'ns-resize',
-              borderRadius: '8px'
-            }
-          },
+        { sx: { p: 3, mt: 2 } },
+        // Image Slideshow for Projects
+        modalType === 'project' && selectedItem.images && React.createElement(
+          Box,
+          { sx: { mb: 3, position: 'relative' } },
           React.createElement(
-            'div',
-            {
+            Box,
+            { sx: { position: 'relative', width: '100%', height: '400px', overflow: 'hidden', borderRadius: '8px' } },
+            React.createElement('img', {
+              src: selectedItem.images[currentImageIndex],
+              alt: `${selectedItem.title} - View ${currentImageIndex + 1}`,
               style: {
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                transform: `translateY(-${currentImageIndex * 400}px)`
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
               }
-            },
-            selectedProject.images.map((image, idx) =>
-              React.createElement('img', {
-                key: idx,
-                src: image,
-                alt: `${selectedProject.title} - View ${idx + 1}`,
-                style: {
-                  width: '100%',
-                  height: '400px',
-                  objectFit: 'cover',
-                  display: 'block',
-                  userSelect: 'none'
+            }),
+            React.createElement(
+              IconButton,
+              {
+                onClick: handlePrevImage,
+                sx: {
+                  position: 'absolute',
+                  left: 10,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'rgba(255,255,255,0.9)',
+                  '&:hover': { backgroundColor: 'rgba(255,255,255,1)' }
                 }
-              })
+              },
+              React.createElement(ArrowBackIosNewIcon)
+            ),
+            React.createElement(
+              IconButton,
+              {
+                onClick: handleNextImage,
+                sx: {
+                  position: 'absolute',
+                  right: 10,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'rgba(255,255,255,0.9)',
+                  '&:hover': { backgroundColor: 'rgba(255,255,255,1)' }
+                }
+              },
+              React.createElement(ArrowForwardIosIcon)
+            ),
+            React.createElement(
+              Box,
+              {
+                sx: {
+                  position: 'absolute',
+                  bottom: 10,
+                  right: 10,
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                  color: '#fff',
+                  padding: '4px 12px',
+                  borderRadius: '4px',
+                  fontSize: '0.85rem'
+                }
+              },
+              `${currentImageIndex + 1} / ${selectedItem.images.length}`
             )
           ),
           React.createElement(
-            'div',
-            {
-              style: {
-                position: 'absolute',
-                bottom: '15px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                display: 'flex',
-                gap: '8px',
-                zIndex: 10,
-                pointerEvents: 'none'
-              }
-            },
-            selectedProject.images.map((_, idx) =>
+            Box,
+            { sx: { display: 'flex', gap: 1, mt: 2, overflowX: 'auto' } },
+            selectedItem.images.map((image, idx) =>
               React.createElement(
-                'div',
+                Box,
                 {
                   key: idx,
-                  style: {
-                    width: '10px',
-                    height: '10px',
-                    borderRadius: '50%',
-                    backgroundColor: idx === currentImageIndex ? '#fff' : 'rgba(255, 255, 255, 0.5)',
+                  onClick: () => setCurrentImageIndex(idx),
+                  sx: {
+                    minWidth: '80px',
+                    height: '60px',
+                    border: idx === currentImageIndex ? '3px solid var(--primary-color)' : '2px solid var(--border-color)',
+                    borderRadius: '4px',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    opacity: idx === currentImageIndex ? 1 : 0.6,
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                    '&:hover': { opacity: 1 }
                   }
-                }
+                },
+                React.createElement('img', {
+                  src: image,
+                  alt: `Thumbnail ${idx + 1}`,
+                  style: {
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }
+                })
               )
             )
           )
         ),
-        React.createElement(
-          'div',
-          { style: { marginTop: '10px' } },
+        // Single Image for Services and Products
+        (modalType === 'service' || modalType === 'product') && React.createElement(
+          Box,
+          { sx: { mb: 3 } },
+          React.createElement('img', {
+            src: selectedItem.image,
+            alt: selectedItem.title || selectedItem.name,
+            style: {
+              width: '100%',
+              height: '400px',
+              objectFit: 'cover',
+              borderRadius: '8px'
+            }
+          })
+        ),
+        // Additional Info for Projects
+        modalType === 'project' && React.createElement(
+          Box,
+          { sx: { mb: 2, display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' } },
+          React.createElement(Chip, {
+            label: selectedItem.category,
+            size: 'small',
+            sx: {
+              backgroundColor: 'var(--primary-color)',
+              color: '#ffffff'
+            }
+          }),
           React.createElement(
-            'p',
-            { style: { color: '#666', fontSize: '0.95rem', marginBottom: '8px' } },
-            React.createElement('strong', null, 'Location: '),
-            selectedProject.location
+            'span',
+            { style: { color: 'var(--text-secondary)' } },
+            '📍 ' + selectedItem.location
           ),
           React.createElement(
-            'p',
-            { style: { color: '#666', fontSize: '0.95rem', marginBottom: '8px' } },
-            React.createElement('strong', null, 'Year: '),
-            selectedProject.year
-          ),
-          React.createElement(
-            'p',
-            { style: { color: '#666', fontSize: '0.95rem', marginBottom: '15px' } },
-            React.createElement('strong', null, 'Scope: '),
-            selectedProject.scope
-          ),
-          React.createElement(
-            'p',
-            { style: { color: '#333', fontSize: '1rem', lineHeight: '1.6' } },
-            selectedProject.description
+            'span',
+            { style: { color: 'var(--text-secondary)' } },
+            '📅 ' + selectedItem.year
           )
+        ),
+        // Scope for Projects
+        modalType === 'project' && React.createElement(
+          'p',
+          { style: { color: 'var(--text-secondary)', marginBottom: '16px', fontSize: '0.95rem' } },
+          React.createElement('strong', { style: { color: 'var(--primary-color)' } }, 'Scope: '),
+          selectedItem.scope
+        ),
+        // Category for Products
+        modalType === 'product' && React.createElement(
+          Box,
+          { sx: { mb: 2 } },
+          React.createElement(Chip, {
+            label: selectedItem.category,
+            size: 'small',
+            sx: {
+              backgroundColor: 'var(--primary-color)',
+              color: '#ffffff'
+            }
+          })
+        ),
+        // Description
+        React.createElement(
+          'p',
+          { style: { color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '24px' } },
+          selectedItem.description
+        ),
+        // Full Content
+        renderModalContent(selectedItem)
+      ),
+      React.createElement(
+        DialogActions,
+        { sx: { p: 3, borderTop: '1px solid var(--border-color)' } },
+        React.createElement(
+          Button,
+          {
+            onClick: handleCloseModal,
+            sx: {
+              color: 'var(--text-secondary)',
+              '&:hover': {
+                backgroundColor: 'rgba(128, 128, 128, 0.1)'
+              }
+            }
+          },
+          'Close'
+        ),
+        React.createElement(
+          Button,
+          {
+            variant: 'contained',
+            onClick: () => window.location.href = '/contact',
+            sx: {
+              background: 'linear-gradient(135deg, var(--primary-color), var(--primary-light))',
+              color: '#ffffff',
+              '&:hover': {
+                background: 'linear-gradient(135deg, var(--primary-dark), var(--primary-color))',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 6px 20px var(--shadow-hover)'
+              }
+            }
+          },
+          modalType === 'project' ? 'Start Your Project' : 'Get a Quote'
         )
       )
     )

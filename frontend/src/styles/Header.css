@@ -105,6 +105,8 @@ body.dark-mode .header {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  margin-left: auto;
+  z-index: 10;
 }
 
 /* Mobile Navigation */
@@ -112,6 +114,7 @@ body.dark-mode .header {
   display: none;
   align-items: center;
   gap: 10px;
+  margin-left: auto;
 }
 
 .mobile-drawer {
@@ -139,7 +142,6 @@ body.dark-mode .header {
 
   .nav-mobile {
     display: flex;
-    margin-left: auto;
   }
 
   .toolbar {

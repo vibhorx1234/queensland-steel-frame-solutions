@@ -122,9 +122,9 @@ exports.sendOTP = async (req, res) => {
 
     // Email template for OTP
     const mailOptions = {
-      from: `"Queensland Steel Frame Solutions" <${process.env.EMAIL_USER}>`,
+      from: `"Aussie Frame Systems" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Email Verification - Queensland Steel Frame Solutions',
+      subject: 'Email Verification - Aussie Frame Systems',
       html: `
         <!DOCTYPE html>
         <html>
@@ -142,12 +142,12 @@ exports.sendOTP = async (req, res) => {
         <body>
           <div class="container">
             <div class="header">
-              <h1>Queensland Steel Frame Solutions</h1>
+              <h1>Aussie Frame Systems</h1>
               <p>Email Verification</p>
             </div>
             <div class="content">
               <h2>Hello ${name},</h2>
-              <p>Thank you for contacting Queensland Steel Frame Solutions Pty Ltd.</p>
+              <p>Thank you for contacting Aussie Frame Systems</p>
               <p>To complete your message submission, please verify your email address by entering the following OTP:</p>
               <div class="otp-box">
                 <div class="otp">${otp}</div>
@@ -155,7 +155,7 @@ exports.sendOTP = async (req, res) => {
               <p><strong>This OTP is valid for 10 minutes.</strong></p>
               <p>If you didn't request this, please ignore this email.</p>
               <div class="footer">
-                <p>&copy; 2024 Queensland Steel Frame Solutions Pty Ltd. All rights reserved.</p>
+                <p>&copy; 2024 Aussie Frame Systems. All rights reserved.</p>
               </div>
             </div>
           </div>
@@ -281,7 +281,7 @@ exports.verifyOTP = async (req, res) => {
           <div class="container">
             <div class="header">
               <h1>New Contact Form Submission</h1>
-              <p>Queensland Steel Frame Solutions</p>
+              <p>Aussie Frame Systems</p>
             </div>
             <div class="content">
               <h2>Contact Details</h2>
@@ -302,7 +302,7 @@ exports.verifyOTP = async (req, res) => {
                 <p>${contactData.message.replace(/\n/g, '<br>')}</p>
               </div>
               <p style="margin-top: 30px; color: #666; font-size: 14px;">
-                This message was sent from the Queensland Steel Frame Solutions website contact form on ${new Date().toLocaleString()}.
+                This message was sent from the Aussie Frame Systems website contact form on ${new Date().toLocaleString()}.
               </p>
             </div>
           </div>
@@ -313,7 +313,7 @@ exports.verifyOTP = async (req, res) => {
 
     // Send confirmation email to user
     const userConfirmationOptions = {
-      from: `"Queensland Steel Frame Solutions" <${process.env.EMAIL_USER}>`,
+      from: `"Aussie Frame Systems" <${process.env.EMAIL_USER}>`,
       to: contactData.email,
       subject: 'Thank You for Contacting Us',
       html: `
@@ -335,12 +335,12 @@ exports.verifyOTP = async (req, res) => {
             </div>
             <div class="content">
               <h2>Hello ${contactData.name},</h2>
-              <p>Thank you for contacting Queensland Steel Frame Solutions Pty Ltd.</p>
+              <p>Thank you for contacting Aussie Frame Systems</p>
               <p>We have received your message and will get back to you as soon as possible.</p>
               <p>Our team typically responds within 24-48 business hours.</p>
               <p>If you have any urgent queries, please feel free to call us directly.</p>
               <div class="footer">
-                <p>&copy; 2024 Queensland Steel Frame Solutions Pty Ltd. All rights reserved.</p>
+                <p>&copy; 2024 Aussie Frame Systems. All rights reserved.</p>
               </div>
             </div>
           </div>

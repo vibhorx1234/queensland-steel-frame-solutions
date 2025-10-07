@@ -7,6 +7,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import '../styles/Footer.css';
+import logo from '../assets/images/logo.jpg';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,25 +23,41 @@ const Footer = () => {
         { className: 'container' },
         React.createElement(
           'div',
-          { className: 'footer-grid' },
+          { 
+            className: 'footer-grid',
+            style: {
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '40px',
+              padding: '40px 0'
+            }
+          },
           // Company Info Column
           React.createElement(
             'div',
             { className: 'footer-column' },
             React.createElement(
               'div',
-              { className: 'footer-logo' },
+              { className: 'footer-logo', style: { marginBottom: '20px' } },
               React.createElement('img', {
-                src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=180&h=50&fit=crop&q=80',
-                alt: 'Queensland Steel Frame Solutions',
-                style: { objectFit: 'cover', borderRadius: '4px' }
+                src: logo,
+                alt: 'Aussie Frame Systems',
+                style: { 
+                  objectFit: 'contain', 
+                  borderRadius: '4px',
+                  height: '50px',
+                  width: 'auto',
+                  marginBottom: '15px',
+                  filter: 'none',
+                  mixBlendMode: 'normal',
+                  display: 'block'
+                }
               }),
-              React.createElement('h3', null, 'Queensland Steel Frame'),
-              React.createElement('p', null, 'Solutions Pty Ltd')
+              React.createElement('h3', { style: { margin: '10px 0 5px 0', fontSize: '1.2rem' } }, 'Aussie Frame Systems')
             ),
             React.createElement(
               'p',
-              { className: 'footer-description' },
+              { className: 'footer-description', style: { lineHeight: '1.6', fontSize: '0.95rem' } },
               'Building excellence with premium steel frame construction solutions. Your trusted partner in quality construction.'
             )
           ),
@@ -48,39 +65,39 @@ const Footer = () => {
           React.createElement(
             'div',
             { className: 'footer-column' },
-            React.createElement('h4', null, 'Quick Links'),
+            React.createElement('h4', { style: { marginBottom: '20px', fontSize: '1.1rem' } }, 'Quick Links'),
             React.createElement(
               'ul',
-              { className: 'footer-links' },
+              { className: 'footer-links', style: { listStyle: 'none', padding: '0', margin: '0' } },
               React.createElement(
                 'li',
-                null,
-                React.createElement(Link, { to: '/' }, 'Home')
+                { style: { marginBottom: '12px' } },
+                React.createElement(Link, { to: '/', style: { textDecoration: 'none', fontSize: '0.95rem' } }, 'Home')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(Link, { to: '/about' }, 'About Us')
+                { style: { marginBottom: '12px' } },
+                React.createElement(Link, { to: '/about', style: { textDecoration: 'none', fontSize: '0.95rem' } }, 'About Us')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(Link, { to: '/services' }, 'Services')
+                { style: { marginBottom: '12px' } },
+                React.createElement(Link, { to: '/services', style: { textDecoration: 'none', fontSize: '0.95rem' } }, 'Services')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(Link, { to: '/products' }, 'Products')
+                { style: { marginBottom: '12px' } },
+                React.createElement(Link, { to: '/products', style: { textDecoration: 'none', fontSize: '0.95rem' } }, 'Products')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(Link, { to: '/projects' }, 'Projects')
+                { style: { marginBottom: '12px' } },
+                React.createElement(Link, { to: '/projects', style: { textDecoration: 'none', fontSize: '0.95rem' } }, 'Projects')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(Link, { to: '/contact' }, 'Contact Us')
+                { style: { marginBottom: '12px' } },
+                React.createElement(Link, { to: '/contact', style: { textDecoration: 'none', fontSize: '0.95rem' } }, 'Contact Us')
               )
             )
           ),
@@ -88,27 +105,27 @@ const Footer = () => {
           React.createElement(
             'div',
             { className: 'footer-column' },
-            React.createElement('h4', null, 'Contact Info'),
+            React.createElement('h4', { style: { marginBottom: '20px', fontSize: '1.1rem' } }, 'Contact Info'),
             React.createElement(
               'ul',
-              { className: 'contact-info' },
+              { className: 'contact-info', style: { listStyle: 'none', padding: '0', margin: '0' } },
               React.createElement(
                 'li',
-                null,
-                React.createElement(LocationOnIcon, { className: 'contact-icon' }),
-                React.createElement('span', null, 'Queensland, Australia')
+                { style: { display: 'flex', alignItems: 'flex-start', marginBottom: '15px', gap: '10px' } },
+                React.createElement(LocationOnIcon, { className: 'contact-icon', style: { fontSize: '20px', marginTop: '2px' } }),
+                React.createElement('span', { style: { fontSize: '0.95rem', lineHeight: '1.5' } }, 'Queensland, Australia')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(PhoneIcon, { className: 'contact-icon' }),
-                React.createElement('span', null, '+61 XXX XXX XXX')
+                { style: { display: 'flex', alignItems: 'center', marginBottom: '15px', gap: '10px' } },
+                React.createElement(PhoneIcon, { className: 'contact-icon', style: { fontSize: '20px' } }),
+                React.createElement('span', { style: { fontSize: '0.95rem' } }, '+61 735 328 696')
               ),
               React.createElement(
                 'li',
-                null,
-                React.createElement(EmailIcon, { className: 'contact-icon' }),
-                React.createElement('span', null, 'info@queenslandsteel.com.au')
+                { style: { display: 'flex', alignItems: 'flex-start', marginBottom: '15px', gap: '10px' } },
+                React.createElement(EmailIcon, { className: 'contact-icon', style: { fontSize: '20px', marginTop: '2px' } }),
+                React.createElement('span', { style: { fontSize: '0.95rem', lineHeight: '1.5', wordBreak: 'break-word' } }, 'admin@aussieframesystems.com.au')
               )
             )
           ),
@@ -116,29 +133,47 @@ const Footer = () => {
           React.createElement(
             'div',
             { className: 'footer-column' },
-            React.createElement('h4', null, 'Follow Us'),
+            React.createElement('h4', { style: { marginBottom: '20px', fontSize: '1.1rem' } }, 'Follow Us'),
             React.createElement(
               'div',
-              { className: 'social-links' },
+              { className: 'social-links', style: { display: 'flex', gap: '15px', marginBottom: '20px' } },
               React.createElement(
                 'a',
-                { href: '#', target: '_blank', rel: 'noopener noreferrer', 'aria-label': 'Facebook' },
-                React.createElement(FacebookIcon)
+                { 
+                  href: '#', 
+                  target: '_blank', 
+                  rel: 'noopener noreferrer', 
+                  'aria-label': 'Facebook',
+                  style: { transition: 'transform 0.2s' }
+                },
+                React.createElement(FacebookIcon, { style: { fontSize: '28px' } })
               ),
               React.createElement(
                 'a',
-                { href: '#', target: '_blank', rel: 'noopener noreferrer', 'aria-label': 'LinkedIn' },
-                React.createElement(LinkedInIcon)
+                { 
+                  href: '#', 
+                  target: '_blank', 
+                  rel: 'noopener noreferrer', 
+                  'aria-label': 'LinkedIn',
+                  style: { transition: 'transform 0.2s' }
+                },
+                React.createElement(LinkedInIcon, { style: { fontSize: '28px' } })
               ),
               React.createElement(
                 'a',
-                { href: '#', target: '_blank', rel: 'noopener noreferrer', 'aria-label': 'Instagram' },
-                React.createElement(InstagramIcon)
+                { 
+                  href: 'https://www.instagram.com/aussieframesystems?igsh=aTRpM2xyc2J6dHI5', 
+                  target: '_blank', 
+                  rel: 'noopener noreferrer', 
+                  'aria-label': 'Instagram',
+                  style: { transition: 'transform 0.2s' }
+                },
+                React.createElement(InstagramIcon, { style: { fontSize: '28px' } })
               )
             ),
             React.createElement(
               'p',
-              { className: 'footer-cta' },
+              { className: 'footer-cta', style: { fontSize: '0.95rem', lineHeight: '1.6', fontStyle: 'italic' } },
               'Get in touch with us today for a consultation!'
             )
           )
@@ -153,8 +188,8 @@ const Footer = () => {
         { className: 'container' },
         React.createElement(
           'p',
-          null,
-          `© ${currentYear} Queensland Steel Frame Solutions Pty Ltd. All rights reserved.`
+          { style: { textAlign: 'center', padding: '20px 0', margin: '0', fontSize: '0.9rem' } },
+          `© ${currentYear} Aussie Frame Systems. All rights reserved.`
         )
       )
     )

@@ -6,6 +6,7 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import GroupsIcon from '@mui/icons-material/Groups';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import img2 from '../assets/images/about.jpg';
 
 const About = () => {
   const values = [
@@ -69,8 +70,8 @@ const About = () => {
                 'div',
                 { className: 'image-wrapper' },
                 React.createElement('img', {
-                  src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop',
-                  alt: 'Queensland Steel Frame Solutions',
+                  src: img2,
+                  alt: 'Aussie Frame Systems',
                   style: { width: '100%', borderRadius: '12px' }
                 })
               )
@@ -86,7 +87,7 @@ const About = () => {
               React.createElement(
                 'p',
                 { style: { color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.8' } },
-                'Queensland Steel Frame Solutions Pty Ltd has been at the forefront of steel frame construction innovation in Queensland. We specialize in delivering premium quality steel frame solutions for both residential and commercial projects.'
+                'Aussie Frame Systems has been at the forefront of steel frame construction innovation in Queensland. We specialize in delivering premium quality steel frame solutions for both residential and commercial projects.'
               ),
               React.createElement(
                 'p',

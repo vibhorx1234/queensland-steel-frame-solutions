@@ -13,22 +13,22 @@ const ContactUs = () => {
         {
             icon: React.createElement(LocationOnIcon),
             title: 'Visit Us',
-            content: ['Queensland, Australia', 'Head Office Location']
+            content: ['Yeerongpilly QLD, Australia', 'Head Office Location']
         },
         {
             icon: React.createElement(PhoneIcon),
             title: 'Call Us',
-            content: ['+61 XXX XXX XXX', 'Mon - Fri: 8AM - 6PM']
+            content: ['+61 735 328 696']
         },
         {
             icon: React.createElement(EmailIcon),
             title: 'Email Us',
-            content: ['info@queenslandsteel.com.au', 'quotes@queenslandsteel.com.au']
+            content: ['om@aussieframesystems.com.au', 'admin@aussieframesystems.com.au']
         },
         {
             icon: React.createElement(AccessTimeIcon),
             title: 'Business Hours',
-            content: ['Monday - Friday: 8:00 AM - 6:00 PM', 'Saturday: 9:00 AM - 2:00 PM']
+            content: ['Monday - Friday: 7:00 AM - 4:00 PM', 'Saturday: 7:00 AM - 4:00 PM']
         }
     ];
 
@@ -139,7 +139,7 @@ const ContactUs = () => {
                                             ),
                                             React.createElement(
                                                 'div',
-                                                null,
+                                                { style: { flex: 1, minWidth: 0 } },
                                                 React.createElement(
                                                     'h4',
                                                     { style: { color: 'var(--primary-color)', marginBottom: '8px' } },
@@ -153,7 +153,10 @@ const ContactUs = () => {
                                                             style: {
                                                                 color: 'var(--text-secondary)',
                                                                 margin: '4px 0',
-                                                                fontSize: '0.95rem'
+                                                                fontSize: info.title === 'Email Us' ? '0.85rem' : '0.95rem',
+                                                                wordBreak: 'break-word',
+                                                                overflowWrap: 'break-word',
+                                                                lineHeight: '1.4'
                                                             }
                                                         },
                                                         line
@@ -169,7 +172,7 @@ const ContactUs = () => {
                 )
             )
         ),
-        // Map Section - FIXED
+        // Map Section
         React.createElement(
             'section',
             {
@@ -190,7 +193,7 @@ const ContactUs = () => {
                             overflow: 'hidden'
                         }
                     },
-                    // Google Map Embed - Using proper embed URL
+                    // Google Map Embed
                     React.createElement(
                         'iframe',
                         {
