@@ -1,15 +1,15 @@
 .header {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.95) !important;
+  background-color: #1a1f2e !important;
 }
 
 body.dark-mode .header {
-  background-color: rgba(26, 31, 46, 0.95) !important;
+  background-color: #1a1f2e !important;
 }
 
 .header.scrolled {
-  box-shadow: 0 4px 20px var(--shadow);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .toolbar {
@@ -66,13 +66,17 @@ body.dark-mode .header {
 
 .nav-link {
   position: relative;
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
   padding: 8px 0;
   transition: color 0.3s ease;
   white-space: nowrap;
+}
+
+body.dark-mode .nav-link {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .nav-link::after {
@@ -87,7 +91,11 @@ body.dark-mode .header {
 }
 
 .nav-link:hover {
-  color: var(--primary-color);
+  color: #3d59ae;
+}
+
+body.dark-mode .nav-link:hover {
+  color: #3d59ae;
 }
 
 .nav-link:hover::after,
@@ -96,7 +104,12 @@ body.dark-mode .header {
 }
 
 .nav-link.active {
-  color: var(--primary-color);
+  color: #3d59ae;
+  font-weight: 600;
+}
+
+body.dark-mode .nav-link.active {
+  color: #3d59ae;
   font-weight: 600;
 }
 
@@ -107,6 +120,28 @@ body.dark-mode .header {
   flex-shrink: 0;
   margin-left: auto;
   z-index: 10;
+}
+
+/* Theme toggle button styling */
+.nav-actions .MuiIconButton-root,
+.nav-mobile .MuiIconButton-root {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-mode .nav-actions .MuiIconButton-root,
+body.dark-mode .nav-mobile .MuiIconButton-root {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Force white color for theme toggle icons */
+.nav-actions svg,
+.nav-mobile svg {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+body.dark-mode .nav-actions svg,
+body.dark-mode .nav-mobile svg {
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Mobile Navigation */
@@ -121,13 +156,33 @@ body.dark-mode .header {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: rgba(26, 31, 46, 0.98);
+}
+
+body.dark-mode .mobile-drawer {
+  background-color: rgba(26, 31, 46, 0.98);
 }
 
 .drawer-header {
   display: flex;
   justify-content: flex-end;
   padding: 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .drawer-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile drawer links */
+.mobile-drawer .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 16px 24px;
+  display: block;
+}
+
+body.dark-mode .mobile-drawer .nav-link {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Responsive */
